@@ -17,7 +17,7 @@ public class D_DB {
 	static Connection con = null;
 	static Statement stmt = null;
 
-	static String userid = "hr", password = "hr";
+	static String userid = "com02", password = "com02";
 	static String url = "jdbc:oracle:thin:@localhost:1521:xe";
 
 	public static Connection getConnection() {
@@ -41,6 +41,7 @@ public class D_DB {
 		return con;
 	}
 
+	// 테이블 생성 메서드
 	public static void createTables() {
 		Connection con = getConnection();
 		String query;
@@ -48,8 +49,8 @@ public class D_DB {
 
 		try {
 			query = "create table Word " + "(name varchar(32) primary key, "
-					+ "mean varchar(200) not null, " + "importance varchar2(30) , "
-					+ "count number(20))";
+					+ "mean varchar(200) not null, " + "importance number(38) , "
+					+ "count  number(38))";
 			stmt = con.createStatement();
 			stmt.executeUpdate(query);
 			stmt.close();
