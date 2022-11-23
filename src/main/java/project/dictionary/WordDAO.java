@@ -7,14 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-
+//
 
 public class WordDAO {
 
-	private static String url = MainClass.url;	//주소
-	private static String uid = MainClass.uid;	//계정
-	private static String upw = MainClass.upw;	//비밀번호
+	private static String url = UserMain.url;	//주소
+	private static String uid = UserMain.uid;	//계정
+	private static String upw = UserMain.upw;	//비밀번호
 
 
 
@@ -97,12 +98,10 @@ public class WordDAO {
 		String create;
 
 		try {
-
 			create = "Create Table Word  (W_Word varchar2(32)  primary key,\r\n"
 					+ "                   W_Mean varchar2(200) not null,  \r\n"
 					+ "                   W_Level number(2) , \r\n"
 					+ "                   W_Writer varchar2(20))";
-
 			pstmt = con.prepareStatement(create);
 			int result = pstmt.executeUpdate();
 			if (result == 1 ) {
@@ -117,7 +116,7 @@ public class WordDAO {
 	}
 
 
-	public static void insertWord(String word, String mean, int level) {
+	public static void insertWord(String word, String mean, int level, String writer) {
 		Connection con = getConnection();
 		String insert;
 		String select;
@@ -131,11 +130,12 @@ public class WordDAO {
 			result = pstmt.executeQuery();
 			
 			if (result.next() == false) {
-				insert = "Insert Into Word Values(?, ?, ?,'작성자' )";
+				insert = "Insert Into WORD Values(?, ?, ?, ?)";
 				pstmt = con.prepareStatement(insert);
 				pstmt.setString(1, word);
 				pstmt.setString(2, mean);
 				pstmt.setInt(3, level);
+				pstmt.setString(4, writer);
 				pstmt.executeUpdate();
 				System.out.println("입력완료");
 				
@@ -174,10 +174,6 @@ public class WordDAO {
 	}
 
 
-
-		
-		
-	
 	public static String getData(String word) {//검색기능
 		Connection con = getConnection();
 
