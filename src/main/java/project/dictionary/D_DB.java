@@ -3,6 +3,7 @@ package project.dictionary;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,7 @@ public class D_DB {
 
 	static Connection con = null;
 	static Statement stmt = null;
+	static PreparedStatement pstmt = null;
 
 	static String userid = "COM02", password = "COM02";
 	static String url = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -60,29 +62,29 @@ public class D_DB {
 		}
 	}
 
-	public static void insertWord(String word, String mean, int importance) {
+	public static void insertWord(String W_word, String W_mean, int importance, String W_writer) {
 		Connection con = getConnection();
 
-		String insert = "insert into Word values('" + word + "', '" + mean
+		String insert = "insert into Word values('" + W_word + "', '" + W_mean
 				+ "', " + importance + ", " + 1 + ")";
-		String select = "SELECT name, count FROM Word WHERE name = '" + word + "'";
+		String select = "SELECT name, count FROM Word WHERE name = '" + W_word + "'";
 
 		try {
 
-			stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			pstmt = con.prepareStatement(insert);
 			ResultSet result = stmt.executeQuery(select);
 			if (result.first() == false) {
-				stmt.executeUpdate(insert);
+				pstmt.executeUpdate(insert);
 			} else {
 				int count = result.getInt(2);
 				count++;
-				String update = "update Word set mean = '" + mean + "', count = " + count
-						+ " where name = '" + word+ "'";
+				String update = "update Word set mean = '" + W_mean + "', count = " + count
+						+ " where name = '" + W_word+ "'";
 
-				stmt.executeUpdate(update);
+				pstmt.executeUpdate(update);
 			}
 
-			stmt.close();
+			pstmt.close();
 			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -153,7 +155,8 @@ public class D_DB {
 			stmt.close();
 			con.close();
 
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
