@@ -17,7 +17,7 @@ public class D_DB {
 	static Connection con = null;
 	static Statement stmt = null;
 
-	static String userid = "hr", password = "hr";
+	static String userid = "COM02", password = "COM02";
 	static String url = "jdbc:oracle:thin:@localhost:1521:xe";
 
 	public static Connection getConnection() {
@@ -35,7 +35,7 @@ public class D_DB {
 			con = DriverManager.getConnection(url, userid, password);
 
 		} catch (SQLException ex) {
-			System.err.println("SQLException: " + ex.getMessage());
+			System.out.println("SQLException: " + ex.getMessage());
 		}
 
 		return con;
@@ -158,7 +158,7 @@ public class D_DB {
 		}
 	}
 	
-	public static void getData(String[] data, String word){
+	public static void getData(Object[] data, String word){
 		Connection con = getConnection();
 
 		String select = "SELECT name,mean FROM Word where name = '" +
@@ -169,8 +169,14 @@ public class D_DB {
 			ResultSet result = stmt.executeQuery(select);
 
 			while(result.next()){
-				data[0] = result.getString(1);
+				data[0] = result.getInt(1);
 				data[1] = result.getString(2);
+				data[2] = result.getString(3);
+				data[3] = result.getString(4);
+				data[4] = result.getInt(5);
+				
+				System.out.println("단어번호 : " + data[0] + " 영어 단어 : " + data[1] + " 단어 뜻 : " + 
+							data[2] + " 회원ID" + data[3] + " 단어 난이도 : " + data[4]);
 			}
 			stmt.close();
 			con.close();
