@@ -69,7 +69,7 @@ public class D_DB {
 
 		try {
 
-			stmt = con.createStatement();
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			ResultSet result = stmt.executeQuery(select);
 			if (result.first() == false) {
 				stmt.executeUpdate(insert);
@@ -180,4 +180,8 @@ public class D_DB {
 			e.printStackTrace();
 		}
 	}
+
+
+
+
 }
