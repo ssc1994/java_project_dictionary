@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import Project.WordVO;
 
 public class WordDAO {
 
@@ -19,6 +22,63 @@ public class WordDAO {
 	static Connection con = null;			//con 멤버변수
 	static PreparedStatement pstmt = null;	//pstmt 멤버변수
 	static ResultSet result = null;			//result 멤버변수
+	
+	//입력된 데이터 전부 출력하는 메서드
+	public ArrayList<WordVO> selectEx() {
+		ArrayList<WordVO> list = new ArrayList<>();
+
+		String sql = "select * from Word";
+
+
+		Connection conn =null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null; //select결과를 반환받을 객체
+
+		try {
+			//드라이버 로드
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+
+			//conn
+			conn = DriverManager.getConnection(url, uid, upw);
+
+			//stmt
+			pstmt = conn.prepareStatement(sql);
+
+			//?값에 대한 처리 ( 생략 )
+
+			//sql 실행 ( select의 실행 )
+			rs = pstmt.executeQuery();
+
+			while(rs.next()) { //다음 row가 있다면 true
+
+				//한 행에 대한 처리( getInt, getString, getDouble, getTimestamp, getDate )
+				int importance = rs.getInt("W_LEVEL");
+				String word = rs.getString("W_WORD"); //컬럼명
+				String mean = rs.getString("W_MEAN");
+
+				//한번 회전할 때마다 하나씩 생성
+				//vo에 행 데이터 저장, vo를 리스트에 add를 이용해서 저장
+				WordVO vo = new WordVO(importance, word, mean);
+				list.add(vo);
+
+				System.out.println("난이도 : " + importance + ", 단어 : " + word + ", 뜻 : " + mean);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+
+			try {
+				conn.close();
+				pstmt.close();
+				rs.close();
+			} catch (Exception e2) {
+				System.out.println("close 에러");
+			}
+		}
+
+		return list;
+	}
 
 	public static Connection getConnection() {
 
@@ -45,7 +105,14 @@ public class WordDAO {
 					+ "                   W_Level number(2) , \r\n"
 					+ "                   W_Writer varchar2(20))";
 			pstmt = con.prepareStatement(create);
-			pstmt.executeUpdate();
+			int result = pstmt.executeUpdate();
+			if (result == 1 ) {
+		         System.out.println("성공");
+		      }else {
+		         System.out.println("실패");
+		      }
+		         
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,9 +177,10 @@ public class WordDAO {
 
 
 
-
 		
-	}
+		
+	
+}
 	
 	
 	public static void showTable() {
@@ -121,17 +189,17 @@ public class WordDAO {
 		String select = "SELECT * FROM Word ";
 
 		try {
-			pstmt = (PreparedStatement) con.createStatement();
+			pstmt = con.prepareStatement(select);
 			ResultSet result = pstmt.executeQuery(select);
-			System.out.println("\n 단어목록 ");
+			System.out.println("\n -----단어목록----- ");
 			while(result.next()){
-				String word = result.getString(1);
-				String mean = result.getString(2);
-				int level = result.getInt(3);
-				int count = result.getInt(4);
+				int W_NO = result.getInt("W_NO");
+				String W_WORD = result.getString("W_Word");
+				String W_MEAN = result.getString("W_Mean");
+				int W_LEVEL = result.getInt("W_LEVEL");
 				
-				System.out.println("영어 단어 : " + word + "\n영어 뜻 : " +
-						mean + "\n난이도 : level." + level + "\n복습횟수 : " + count + "\n");	
+				System.out.println("NO." + W_NO + "\n영어 단어 : " + W_WORD + "\n영어 뜻 : " +
+						W_MEAN + "\n난이도 : level." + W_LEVEL + "\n" );	
 			}
 			pstmt.close();
 			con.close();
@@ -142,7 +210,7 @@ public class WordDAO {
 	}
 	
 	//입력한 문자를 삭제하고싶은데, 삭제오류 수정필요 
-		public static void DeleteWord(String word) {
+		public static void DeleteWord() {
 			Connection con = getConnection();
 			
 			Scanner scan1 = new Scanner(System.in);
@@ -155,20 +223,18 @@ public class WordDAO {
 				showTable();
 				String w = scan2.nextLine();
 				
-				if(w.equals(word)) {
+				
 					try {
-						String delete = "DELETE FROM Word where name = '" + word + "'";
-						pstmt = (PreparedStatement) con.createStatement();
-						pstmt.executeUpdate(delete);
+						String delete = "DELETE FROM Word where W_word = '" + w + "'";
+						pstmt = con.prepareStatement(delete);
+						pstmt.executeUpdate();
 						System.out.println("단어가 삭제되었습니다.");
 						pstmt.close();
 						con.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
+						System.out.println("단어가 존재하지 않습니다.");
 					}
-				}else {
-					System.out.println("단어가 존재하지 않습니다.");
-				}
 				
 			}else {
 				System.out.println("단어가 삭제되지 않았습니다.");
@@ -176,4 +242,8 @@ public class WordDAO {
 			}
 			
 		}
+		
+		
+		
+		
 }
