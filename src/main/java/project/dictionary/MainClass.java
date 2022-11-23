@@ -1,6 +1,8 @@
 package project.dictionary;
 
 public class MainClass {
+
+	public static void main(String[] args) {
 	
 	public static String uid = "com02";
 	public static String upw = "com02";		//아이디
