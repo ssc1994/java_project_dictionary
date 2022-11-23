@@ -186,8 +186,4 @@ public class D_DB {
 			e.printStackTrace();
 		}
 	}
-
-
-
-
 }
