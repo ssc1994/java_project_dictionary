@@ -58,6 +58,7 @@ public class WordDAO {
 				WordVO vo = new WordVO(importance, word, mean);
 				list.add(vo);
 
+				System.out.println("난이도 : " + importance + ", 단어 : " + word + ", 뜻 : " + mean);
 			}
 
 		} catch (Exception e) {
@@ -116,7 +117,7 @@ public class WordDAO {
 	}
 
 
-	public static void insertWord(String word, String mean, int level) {
+	public static void insertWord(String word, String mean, int level, String writer) {
 		Connection con = getConnection();
 		String insert;
 		String select;
@@ -130,11 +131,12 @@ public class WordDAO {
 			result = pstmt.executeQuery();
 			
 			if (result.next() == false) {
-				insert = "Insert Into Word Values(?, ?, ?,'작성자' )";
+				insert = "Insert Into Word Values(?, ?, ?,? )";
 				pstmt = con.prepareStatement(insert);
 				pstmt.setString(1, word);
 				pstmt.setString(2, mean);
 				pstmt.setInt(3, level);
+				pstmt.setString(4, writer);
 				pstmt.executeUpdate();
 				System.out.println("입력완료");
 				

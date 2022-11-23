@@ -76,14 +76,23 @@ public class EnglishTest {
 				test++;
 			}
 			System.out.println("맞은 갯수 : " + score+"/"+ test);
-			System.out.println("오답노트  ");
-			System.out.println("난이도 : " + W_Level + ", 단어 : " + W_Word + ", 뜻 : " + W_Level);
+			
 			pstmt.close();
 			con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		;
 	}
+	public static void wrongAnswer() {
+		
+		System.out.println("오답노트  ");
+		
+		for(WordVO vo : myword) {
+			
+			System.out.println(vo.toString());
+		}
+		
+	}
+	
 }

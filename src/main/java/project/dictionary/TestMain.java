@@ -20,7 +20,32 @@ public class TestMain {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		EnglishTest et = new EnglishTest();
-		et.getData();
+	
+		
+		boolean flag = true;
+		while(flag) {
+			System.out.println("1. 시험   ||  2. 오답노트  || 3. 종료");
+			
+			int a = scan.nextInt();
+			
+			switch (a) {
+			case 1:
+				et.getData();
+				break;
+			case 2:
+				et.wrongAnswer();
+				break;
+
+			case 3:
+				flag = false;
+			default:
+				break;
+			}
+			
+			
+			
+			
+		}
 	}
 
 }

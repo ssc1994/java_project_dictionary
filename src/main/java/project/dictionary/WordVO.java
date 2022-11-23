@@ -20,7 +20,7 @@ public class WordVO {
 
 	@Override
 	public String toString() {
-		return "WordVO [importance=" + importance + ", word=" + word + ", mean=" + mean + "]";
+		return "[중요도 : " + importance + ", 단어 : " + word + ", 뜻 : " + mean + " ]";
 	}
 
 	public int getImportance() {
