@@ -7,25 +7,27 @@ public class MakeMemo {
 	public static void main(String[] args) {
 		D_DB data = new D_DB();
 
-WordDAO w = new WordDAO();
+		WordDAO w = new WordDAO();
 		
 		w.getConnection();
 		
-		try {
-			w.createTable();
-			System.out.println("테이블 생성완료");
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			System.out.println("테이블 미생성");
-		}
+//		try {
+//			w.createTable();
+//			System.out.println("테이블 생성완료");
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//			System.out.println("테이블 미생성");
+//		}
+//		
+//		
+//		//단어 단어장에 추가하기
 		
 		
-		//단어 단어장에 추가하기
-		data.insertWord("안녕하세요", "인삿말",1);
+//		w.selectEx();
 		
 		//단어장에 있는 단어목록
-		data.showTable();
+//		w.showTable();
 
 		/*
 		 * 단어장과 어울리는 테이블 구상
