@@ -14,8 +14,8 @@ public class UserMain {
 		
 		WordDAO wdao = new WordDAO();
 		
-		String result = udao.loginMember().getName();
-		wdao.insertWord("tl", "qkf", 99, result);
+//		String result = udao.loginMember().getName();
+//		wdao.insertWord("tl", "qkf", 99, result);
 		
 		
 	}

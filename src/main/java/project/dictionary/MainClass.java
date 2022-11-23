@@ -13,12 +13,12 @@ public class MainClass {
 //		wordDAO.getConnection();
 //		wordDAO.createTable();
 		
-		try {
-			wordDAO.insertWord("안녕하세요1", "안녕하세요수정",3);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+//		try {
+//			wordDAO.insertWord("안녕하세요1", "안녕하세요수정",3);
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
 
 		
 		WordDAO.getData("바보");

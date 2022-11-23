@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EnglishTest {
@@ -16,6 +17,7 @@ public class EnglishTest {
 	static Connection con = null;			//con 멤버변수
 	static PreparedStatement pstmt = null;	//pstmt 멤버변수
 	static ResultSet result = null;			//result 멤버변수
+	static ArrayList<WordVO> myword = new ArrayList<>();
 	
 	public static Connection getConnection() {
 
@@ -46,6 +48,7 @@ public class EnglishTest {
 		String W_Mean = "";
 		int W_Level = 0;
 		int score = 0;
+		int test = 0;
 		try {
 			pstmt = con.prepareStatement(select);
 			pstmt.setInt(1, num);
@@ -56,14 +59,25 @@ public class EnglishTest {
 				W_Mean = result.getString("W_Mean");
 				W_Level = result.getInt("W_Level");
 				//단어의 정보 출력
-				System.out.print("단어의 정보\n뜻 : " + W_Mean + "   |  단어 :   ");
+				System.out.print("단어의 정보\n뜻 : " + W_Mean + "   |   단어 :   ");
 				String ans = scan.next();
 				if(W_Word.equals(ans)) {
 					System.out.println("정답입니다.");
 					score += W_Level;
+				}else {
+					System.out.println("오답입니다.  정답 : " + W_Word);
+					System.out.println();
+					
+//--------------------------------myword에 추가
+					WordVO vo = new WordVO(W_Level, W_Word, W_Mean);
+					myword.add(vo);
+					
 				}
+				test++;
 			}
-			System.out.println("맞은 갯수 : " + score+"/26");
+			System.out.println("맞은 갯수 : " + score+"/"+ test);
+			System.out.println("오답노트  ");
+			System.out.println("난이도 : " + W_Level + ", 단어 : " + W_Word + ", 뜻 : " + W_Level);
 			pstmt.close();
 			con.close();
 		} catch (SQLException e) {
