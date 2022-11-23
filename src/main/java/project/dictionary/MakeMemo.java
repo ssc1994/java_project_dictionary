@@ -20,7 +20,6 @@ public class MakeMemo {
 		}
 		
 		//단어 단어장에 추가하기
-		data.insertWord("안녕하세요", "인삿말",1);
 		
 		//단어장에 있는 단어목록
 		data.showTable();

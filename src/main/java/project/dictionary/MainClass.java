@@ -2,7 +2,6 @@ package project.dictionary;
 
 public class MainClass {
 
-	public static void main(String[] args) {
 	
 	public static String uid = "com02";
 	public static String upw = "com02";		//아이디
@@ -10,9 +9,9 @@ public class MainClass {
 
 	public static void main(String[] args) {
 		WordDAO wordDAO = new WordDAO();
-		wordDAO.getConnection();
-		wordDAO.createTable();
+		WordDAO.getConnection();
 		
+		WordDAO.getData("바보");
 		
 	}
 }
