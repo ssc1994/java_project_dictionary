@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Project.WordVO;
 
 public class WordDAO {
 
@@ -43,8 +42,6 @@ public class WordDAO {
 
 			//stmt
 			pstmt = conn.prepareStatement(sql);
-
-			//?값에 대한 처리 ( 생략 )
 
 			//sql 실행 ( select의 실행 )
 			rs = pstmt.executeQuery();
@@ -111,8 +108,6 @@ public class WordDAO {
 		      }else {
 		         System.out.println("실패");
 		      }
-		         
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,9 +140,10 @@ public class WordDAO {
 			} else {
 				update = "Update Word Set  W_mean = ?, W_Level = ? WHERE W_Word = ?";
 				pstmt = con.prepareStatement(update);
-				pstmt.setString(3, word);
 				pstmt.setString(1, mean);
 				pstmt.setInt(2, level);
+				pstmt.setString(3, word);
+				pstmt.executeUpdate();
 				System.out.println("수정완료");
 				
 				
@@ -180,7 +176,6 @@ public class WordDAO {
 		
 		
 	
-}
 	
 	
 	public static void showTable() {
@@ -193,12 +188,12 @@ public class WordDAO {
 			ResultSet result = pstmt.executeQuery(select);
 			System.out.println("\n -----단어목록----- ");
 			while(result.next()){
-				int W_NO = result.getInt("W_NO");
+			
 				String W_WORD = result.getString("W_Word");
 				String W_MEAN = result.getString("W_Mean");
 				int W_LEVEL = result.getInt("W_LEVEL");
 				
-				System.out.println("NO." + W_NO + "\n영어 단어 : " + W_WORD + "\n영어 뜻 : " +
+				System.out.println("\n영어 단어 : " + W_WORD + "\n영어 뜻 : " +
 						W_MEAN + "\n난이도 : level." + W_LEVEL + "\n" );	
 			}
 			pstmt.close();
