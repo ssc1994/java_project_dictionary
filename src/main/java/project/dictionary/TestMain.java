@@ -22,7 +22,6 @@ public class TestMain {
 		EnglishTest et = new EnglishTest();
 	
 		
-		
 		boolean flag = true;
 		while(flag) {
 			System.out.println("1. 시험   ||  2. 오답노트  || 3. 종료");
