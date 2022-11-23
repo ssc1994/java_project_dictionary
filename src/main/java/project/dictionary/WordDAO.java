@@ -58,6 +58,7 @@ public class WordDAO {
 				WordVO vo = new WordVO(importance, word, mean);
 				list.add(vo);
 
+				System.out.println("난이도 : " + importance + ", 단어 : " + word + ", 뜻 : " + mean);
 			}
 
 		} catch (Exception e) {
