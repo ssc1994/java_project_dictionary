@@ -40,6 +40,9 @@ public class MakeMemo {
 		 * 4. 
 		 * 
 		 */
+	
 	}
 	
 }
+
+
