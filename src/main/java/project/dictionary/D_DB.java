@@ -41,6 +41,7 @@ public class D_DB {
 		return con;
 	}
 
+	// 테이블 생성 메서드
 	public static void createTables() {
 		Connection con = getConnection();
 		String query;
@@ -48,8 +49,8 @@ public class D_DB {
 
 		try {
 			query = "create table Word " + "(name varchar(32) primary key, "
-					+ "mean varchar(200) not null, " + "importance varchar2(30) , "
-					+ "count number(20))";
+					+ "mean varchar(200) not null, " + "importance number(38) , "
+					+ "count  number(38))";
 			stmt = con.createStatement();
 			stmt.executeUpdate(query);
 			stmt.close();
@@ -68,7 +69,7 @@ public class D_DB {
 
 		try {
 
-			stmt = con.createStatement();
+			stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			ResultSet result = stmt.executeQuery(select);
 			if (result.first() == false) {
 				stmt.executeUpdate(insert);
@@ -185,4 +186,8 @@ public class D_DB {
 			e.printStackTrace();
 		}
 	}
+
+
+
+
 }
