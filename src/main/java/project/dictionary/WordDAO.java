@@ -178,24 +178,23 @@ public class WordDAO {
 		
 		
 	
-	public static void getData(String word) {//검색기능
+	public static String getData(String word) {//검색기능
 		Connection con = getConnection();
 
 		String select = "SELECT * FROM Word where W_WORD = '" +
 		word + "'";
-
+		String W_Word = "";
+		String W_Mean = "";
 		try {
 			pstmt = con.prepareStatement(select);
 			result = pstmt.executeQuery();
 
 			while(result.next()){ // 컬럼 이름
-				String W_Word = result.getString("W_Word");
-				String W_Mean = result.getString("W_Mean");
-				int W_Level = result.getInt("W_Level");
-				String W_Writer = result.getString("W_Writer");
+				W_Word = result.getString("W_Word");
+				W_Mean = result.getString("W_Mean");
 				//단어의 정보 출력
 				System.out.println("단어의 정보\n단어 : " + W_Word
-						+ ", 뜻 : " + W_Mean + ", 난이도 : " + W_Level + ", 작성자 : " + W_Writer);
+						+ ", 뜻 : " + W_Mean);
 			}
 			pstmt.close();
 			con.close();
@@ -203,6 +202,7 @@ public class WordDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return "단어: " + W_Word + " 뜻: " + W_Mean;
 	}
 	
 	public static void showTable() {
