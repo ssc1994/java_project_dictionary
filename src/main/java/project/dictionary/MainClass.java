@@ -8,16 +8,15 @@ public class MainClass {
 
 	public static void main(String[] args) {
 		WordDAO wordDAO = new WordDAO();
-		wordDAO.getConnection();
+//		wordDAO.getConnection();
 //		wordDAO.createTable();
 		
-//		try {
-//			wordDAO.insertWord(1, "안녕하세요", "인삿말",3,"작성자");
-//			System.out.println("단어 삽입 완료");
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//		}
+		try {
+			wordDAO.insertWord("안녕하세요1", "안녕하세요수정",3);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		
 		
 //		wordDAO.showTable();
