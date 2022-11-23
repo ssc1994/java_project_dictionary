@@ -7,15 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-//
+
 
 public class WordDAO {
 
-	private static String url = UserMain.url;	//주소
-	private static String uid = UserMain.uid;	//계정
-	private static String upw = UserMain.upw;	//비밀번호
+	private static String url = MainClass.url;	//주소
+	private static String uid = MainClass.uid;	//계정
+	private static String upw = MainClass.upw;	//비밀번호
 
 
 
@@ -59,7 +58,6 @@ public class WordDAO {
 				WordVO vo = new WordVO(importance, word, mean);
 				list.add(vo);
 
-				System.out.println("난이도 : " + importance + ", 단어 : " + word + ", 뜻 : " + mean);
 			}
 
 		} catch (Exception e) {
@@ -98,10 +96,12 @@ public class WordDAO {
 		String create;
 
 		try {
+
 			create = "Create Table Word  (W_Word varchar2(32)  primary key,\r\n"
 					+ "                   W_Mean varchar2(200) not null,  \r\n"
 					+ "                   W_Level number(2) , \r\n"
 					+ "                   W_Writer varchar2(20))";
+
 			pstmt = con.prepareStatement(create);
 			int result = pstmt.executeUpdate();
 			if (result == 1 ) {
@@ -116,7 +116,7 @@ public class WordDAO {
 	}
 
 
-	public static void insertWord(String word, String mean, int level, String writer) {
+	public static void insertWord(String word, String mean, int level) {
 		Connection con = getConnection();
 		String insert;
 		String select;
@@ -130,12 +130,11 @@ public class WordDAO {
 			result = pstmt.executeQuery();
 			
 			if (result.next() == false) {
-				insert = "Insert Into WORD Values(?, ?, ?, ?)";
+				insert = "Insert Into Word Values(?, ?, ?,'작성자' )";
 				pstmt = con.prepareStatement(insert);
 				pstmt.setString(1, word);
 				pstmt.setString(2, mean);
 				pstmt.setInt(3, level);
-				pstmt.setString(4, writer);
 				pstmt.executeUpdate();
 				System.out.println("입력완료");
 				
@@ -174,23 +173,28 @@ public class WordDAO {
 	}
 
 
-	public static String getData(String word) {//검색기능
+
+		
+		
+	
+	public static void getData(String word) {//검색기능
 		Connection con = getConnection();
 
 		String select = "SELECT * FROM Word where W_WORD = '" +
 		word + "'";
-		String W_Word = "";
-		String W_Mean = "";
+
 		try {
 			pstmt = con.prepareStatement(select);
 			result = pstmt.executeQuery();
 
 			while(result.next()){ // 컬럼 이름
-				W_Word = result.getString("W_Word");
-				W_Mean = result.getString("W_Mean");
+				String W_Word = result.getString("W_Word");
+				String W_Mean = result.getString("W_Mean");
+				int W_Level = result.getInt("W_Level");
+				String W_Writer = result.getString("W_Writer");
 				//단어의 정보 출력
 				System.out.println("단어의 정보\n단어 : " + W_Word
-						+ ", 뜻 : " + W_Mean);
+						+ ", 뜻 : " + W_Mean + ", 난이도 : " + W_Level + ", 작성자 : " + W_Writer);
 			}
 			pstmt.close();
 			con.close();
@@ -198,7 +202,6 @@ public class WordDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "단어: " + W_Word + " 뜻: " + W_Mean;
 	}
 	
 	public static void showTable() {
