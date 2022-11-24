@@ -11,30 +11,28 @@ import java.util.Scanner;
 
 public class UserDAO { //현재 로그인 멤버 구현
 	
+	private Connection conn1 = null;
+	private PreparedStatement pstmt1 = null;
+	private ResultSet rs = null;
 	
-	private static String url = MainClass.url;	//주소
-	private static String uid = MainClass.uid;	//계정
-	private static String upw = MainClass.upw;	//비밀번호
+	String url = "jdbc:oracle:thin:@172.30.1.32:1521:xe"; //주소
+	String uid = "com02"; //계정
+	String upw = "com02";
 	
-	
-	static Connection con = null;
-	static PreparedStatement pstmt = null;
-	private ResultSet result = null;
 	public UserDAO() {
 	}
-	
 	
 	public int login(String memberID, String memberPassword) {
 		String sql = "select pw from members where m_id = ?";
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			con = DriverManager.getConnection(url, uid, upw);
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, memberID);
-			result = pstmt.executeQuery();
-			while(result.next()) {
-				if(result.getString(1).contentEquals(memberPassword)) {
+			conn1 = DriverManager.getConnection(url, uid, upw);
+			pstmt1 = conn1.prepareStatement(sql);
+			pstmt1.setString(1, memberID);
+			rs = pstmt1.executeQuery();
+			while(rs.next()) {
+				if(rs.getString(1).contentEquals(memberPassword)) {
 					return 1; //비밀번호 일치, 로그인 성공
 				} else {
 					return 0; //비밀번호 불일치
@@ -45,9 +43,9 @@ public class UserDAO { //현재 로그인 멤버 구현
 			e.printStackTrace();
 		} finally {
 			try {
-				con.close();
-				pstmt.close();
-				result.close();
+				conn1.close();
+				pstmt1.close();
+				rs.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -60,7 +58,9 @@ public class UserDAO { //현재 로그인 멤버 구현
 		try {
 			Scanner sc = new Scanner(System.in);
 			UserDAO dao = new UserDAO();
+			System.out.print("ID > ");
 			String memberID = sc.next();
+			System.out.print("PW > ");
 			String memberPassword = sc.next();
 			if(dao.login(memberID, memberPassword) == 1) {
 				currMember.setName(memberID);
