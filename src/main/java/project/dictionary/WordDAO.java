@@ -131,7 +131,6 @@ public class WordDAO {
 			String mean1 = scan.nextLine();
 			System.out.print("\n난이도 >");
 			int level1 = scan.nextInt();
-			System.out.print("\n작성자 >");
 			
 			select = "SELECT * FROM WORD where W_Word = ?";
 			pstmt=con.prepareStatement(select);
