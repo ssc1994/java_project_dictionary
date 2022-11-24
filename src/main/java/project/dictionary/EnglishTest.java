@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class EnglishTest {
 
 	private static String url = MainClass.url;	//주소
@@ -41,9 +44,9 @@ public class EnglishTest {
 		String select = "select aa.* \r\n"
 				+ "from(select rownum rn, a.* \r\n"
 				+ "    from(select * \r\n"
-				+ "        from word)a \r\n"
+				+ "        from word order by DBMS_RANDOM.RANDOM)a \r\n"
 				+ "        where w_level = ?\r\n"
-				+ "        order by DBMS_RANDOM.RANDOM)aa"
+				+ "        )aa"
 				+ "        where rn<=10";
 		String W_Word = "";
 		String W_Mean = "";
