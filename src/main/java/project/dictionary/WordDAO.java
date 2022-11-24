@@ -7,8 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-
+//
 
 public class WordDAO {
 
@@ -17,11 +18,10 @@ public class WordDAO {
 	private static String upw = MainClass.upw;	//비밀번호
 
 
+
 	static Connection con = null;			//con 멤버변수
 	static PreparedStatement pstmt = null;	//pstmt 멤버변수
 	static ResultSet result = null;			//result 멤버변수
-	
-	public WordDAO() {	}
 	
 	//입력된 데이터 전부 출력하는 메서드
 	public ArrayList<WordVO> selectEx() {
@@ -98,12 +98,10 @@ public class WordDAO {
 		String create;
 
 		try {
-
 			create = "Create Table Word  (W_Word varchar2(32)  primary key,\r\n"
 					+ "                   W_Mean varchar2(200) not null,  \r\n"
 					+ "                   W_Level number(2) , \r\n"
 					+ "                   W_Writer varchar2(20))";
-
 			pstmt = con.prepareStatement(create);
 			int result = pstmt.executeUpdate();
 			if (result == 1 ) {
@@ -132,7 +130,7 @@ public class WordDAO {
 			result = pstmt.executeQuery();
 			
 			if (result.next() == false) {
-				insert = "Insert Into Word Values(?, ?, ?,? )";
+				insert = "Insert Into WORD Values(?, ?, ?, ?)";
 				pstmt = con.prepareStatement(insert);
 				pstmt.setString(1, word);
 				pstmt.setString(2, mean);
@@ -180,32 +178,7 @@ public class WordDAO {
 		
 		
 	
-	public static void getData(String word) {//검색기능
-		Connection con = getConnection();
-
-		String select = "SELECT * FROM Word where W_WORD = '" +
-		word + "'";
-
-		try {
-			pstmt = con.prepareStatement(select);
-			result = pstmt.executeQuery();
-
-			while(result.next()){ // 컬럼 이름
-				String W_Word = result.getString("W_Word");
-				String W_Mean = result.getString("W_Mean");
-				int W_Level = result.getInt("W_Level");
-				String W_Writer = result.getString("W_Writer");
-				//단어의 정보 출력
-				System.out.println("단어의 정보\n단어 : " + W_Word
-						+ ", 뜻 : " + W_Mean + ", 난이도 : " + W_Level + ", 작성자 : " + W_Writer);
-			}
-			pstmt.close();
-			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 	
 	public static void showTable() {
 		Connection con = getConnection();
@@ -234,17 +207,17 @@ public class WordDAO {
 	}
 	
 	//입력한 문자를 삭제하고싶은데, 삭제오류 수정필요 
-		public static void DeleteWord() {
+		public static void deleteWord() {
 			Connection con = getConnection();
 			
 			Scanner scan1 = new Scanner(System.in);
 			Scanner scan2 = new Scanner(System.in);
-			System.out.println("삭제하고 싶은 단어가 있습니까 ?\n (네 / 아니오)");
+			System.out.print("삭제하고 싶은 단어가 있습니까 ?\n (네 / 아니오) ");
 			String l = scan1.nextLine();
 		
 			if(l.equals("네")) {
-				System.out.println("삭제할 단어를 입력하세요.");
 				showTable();
+				System.out.print("삭제할 단어를 입력하세요 > ");
 				String w = scan2.nextLine();
 				
 				
