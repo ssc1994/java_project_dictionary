@@ -21,9 +21,9 @@ public class FinalMain {
 				}
 				break;
 			case "2": 
-					String uid = UserMain.uid;
-					String url = UserMain.url;
-					String upw = UserMain.upw;
+					String uid = MainClass.uid;
+					String url = MainClass.url;
+					String upw = MainClass.upw;
 					UserDAO udao = new UserDAO();
 					WordDAO wdao = new WordDAO();
 					EnglishTest et = new EnglishTest();
@@ -37,7 +37,7 @@ public class FinalMain {
 							switch (menu) {
 							case "1":
 								System.out.println("===== 단어 등록 =====");
-								wdao.insertWord("test1", "test1", 9, result);
+								wdao.insertWord();
 								break;
 							case "2": 
 								System.out.println("===== 단어목록 조회 =====");
