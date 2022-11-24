@@ -17,10 +17,11 @@ public class WordDAO {
 	private static String upw = MainClass.upw;	//비밀번호
 
 
-
 	static Connection con = null;			//con 멤버변수
 	static PreparedStatement pstmt = null;	//pstmt 멤버변수
 	static ResultSet result = null;			//result 멤버변수
+	
+	public WordDAO() {	}
 	
 	//입력된 데이터 전부 출력하는 메서드
 	public ArrayList<WordVO> selectEx() {
