@@ -23,10 +23,17 @@ public class WordVO {
 	
 	
 
+	public WordVO(String word) {
+		super();
+		this.word = word;
+	}
+
 	@Override
 	public String toString() {
 		return "오답 > [레벨 : " + importance + ", 단어 : " + word + ", 뜻 :" + mean + ", 작성자 : " + writer + "]";
 	}
+	
+	
 
 	public int getImportance() {
 		return importance;
