@@ -200,8 +200,7 @@ public class WordDAO {
 				int W_Level = result.getInt("W_Level");
 				String W_Writer = result.getString("W_Writer");
 
-				System.out.println("단어의 정보\n단어 : " + W_Word + ", 뜻 : " + W_Mean);
-
+				System.out.println("난이도 : " + W_Level + ", 단어 : " + W_Word + ", 뜻 : " + W_Mean + ", 작성자 :" + W_Writer);
 			}
 			pstmt.close();
 			con.close();	
@@ -210,10 +209,6 @@ public class WordDAO {
 		}
 	}
 
-		
-		
-	
-	
 	
 	public static void showTable() {
 		Connection con = getConnection();
