@@ -18,63 +18,86 @@ public class MemberException {
 	
 	static Matcher m;
 	
-	public void idCheck(String a) throws AuthenException {
+	public boolean idCheck(String a) throws AuthenException {
 		
 		boolean check = false;
 		m = Pattern.compile(p1).matcher(a);
 		if(m.find()) {
 			check = true;
 		}
-		if(check == false) 
+		if(check == false) {
 			throw new AuthenException("ID는 영문 포함, 6~12자리를 입력하세요");
+		}
+		return check;
 	}
 	
-	public void pwCheck(String pw1, String pw2) throws AuthenException {
+	public boolean pwCheck(String pw1, String pw2) throws AuthenException {
 		
 		boolean check = false;
 		m = Pattern.compile(p2).matcher(pw1);
 		if(m.find()) {
 			check = true;
 		}
-		if(check == false) 
+		if(check == false) {
 			throw new AuthenException("비밀번호는 8~12자 사이, 영문과 숫자, 특수문자를 포함해야 합니다");
+		}
 		
-		if(!pw1.equals(pw2))
-
+		if(!pw1.equals(pw2)) {
 			throw new AuthenException("비밀번호가 다릅니다");
+		}
+		return check;
 	}
 	
-	public void nameCheck(String a) throws AuthenException {
+	public boolean pwCheck1(String pw1) throws AuthenException {
+		
+		boolean check = false;
+		m = Pattern.compile(p2).matcher(pw1);
+		if(m.find()) {
+			check = true;
+		}
+		if(check == false) {
+			throw new AuthenException("비밀번호는 8~12자 사이, 영문과 숫자, 특수문자를 포함해야 합니다");
+		}
+		return check;
+	}
+	
+	public boolean nameCheck(String a) throws AuthenException {
 		
 		boolean check = false;
 		m = Pattern.compile(p3).matcher(a);
 		if(m.find()) {
 			check = true;
 		}
-		if(check == false) 
+		if(check == false) {
 			throw new AuthenException("이름은 한글만 입력해주세요");
+		}
+		return check;
 	}
 	
-	public void birthCheck(String a) throws AuthenException {
+	public boolean birthCheck(String a) throws AuthenException {
 		
 		boolean check = false;
 		m = Pattern.compile(p4).matcher(a);
 		if(m.find()) {
 			check = true;
 		}
-		if(check == false) 
+		if(check == false) {
 			throw new AuthenException("생년월일은 숫자만 입력해주세요"
 					+ "\n (YYYYMMdd)");
+		}
+		return check;
 	}
 	
-	public void phoneCheck(String a) throws AuthenException {
+	public boolean phoneCheck(String a) throws AuthenException {
 
 		boolean check = false;
 		m = Pattern.compile(p5).matcher(a);
 		if(m.find()) {
 			check = true;
 		}
-		if(check == false) 
+		if(check == false) {
 			throw new AuthenException("하이픈(-) 제외 13자리를 입력해주세요");
+		}
+		return check;
 	}
 }
