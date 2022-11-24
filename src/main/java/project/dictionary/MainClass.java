@@ -30,15 +30,8 @@ public class MainClass {
 			
 			switch (a) {
 			case 1:
-				System.out.print("단어 >");
-				word = scan.next();
-				System.out.print("\n뜻 >");
-				mean = scan.next();
-				System.out.print("\n난이도 >");
-				level = scan.nextInt();
-				System.out.print("\n작성자 >");
-				writer = scan.next();
-				wordDAO.insertWord(word, mean, level, writer);
+				
+				wordDAO.insertWord();
 				
 				break;
 			case 2:

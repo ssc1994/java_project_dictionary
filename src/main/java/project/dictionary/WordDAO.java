@@ -7,8 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-
+//
 
 public class WordDAO {
 
@@ -97,12 +98,10 @@ public class WordDAO {
 		String create;
 
 		try {
-
 			create = "Create Table Word  (W_Word varchar2(32)  primary key,\r\n"
 					+ "                   W_Mean varchar2(200) not null,  \r\n"
 					+ "                   W_Level number(2) , \r\n"
 					+ "                   W_Writer varchar2(20))";
-
 			pstmt = con.prepareStatement(create);
 			int result = pstmt.executeUpdate();
 			if (result == 1 ) {
@@ -117,35 +116,44 @@ public class WordDAO {
 	}
 
 
-	public static void insertWord(String word, String mean, int level, String writer) {
+	public static void insertWord() {
 		Connection con = getConnection();
 		String insert;
 		String select;
 		String update;
 		try {
 
+			Scanner scan = new Scanner(System.in);
+			System.out.print("단어 >");
+			String word1 = scan.nextLine();
+			System.out.print("\n뜻 >");
+			String mean1 = scan.nextLine();
+			System.out.print("\n난이도 >");
+			int level1 = scan.nextInt();
+			System.out.print("\n작성자 >");
+			String writer1 = scan.nextLine();
+			
 			select = "SELECT * FROM WORD where W_Word = ?";
-
 			pstmt=con.prepareStatement(select);
-			pstmt.setString(1, word);
+			pstmt.setString(1, word1);
 			result = pstmt.executeQuery();
 			
 			if (result.next() == false) {
-				insert = "Insert Into Word Values(?, ?, ?,? )";
+				insert = "Insert Into WORD Values(?, ?, ?, ?)";
 				pstmt = con.prepareStatement(insert);
-				pstmt.setString(1, word);
-				pstmt.setString(2, mean);
-				pstmt.setInt(3, level);
-				pstmt.setString(4, writer);
+				pstmt.setString(1, word1);
+				pstmt.setString(2, mean1);
+				pstmt.setInt(3, level1);
+				pstmt.setString(4, writer1);
 				pstmt.executeUpdate();
 				System.out.println("입력완료");
 				
 			} else {
 				update = "Update Word Set  W_mean = ?, W_Level = ? WHERE W_Word = ?";
 				pstmt = con.prepareStatement(update);
-				pstmt.setString(1, mean);
-				pstmt.setInt(2, level);
-				pstmt.setString(3, word);
+				pstmt.setString(1, mean1);
+				pstmt.setInt(2, level1);
+				pstmt.setString(3, word1);
 				pstmt.executeUpdate();
 				System.out.println("수정완료");
 				
@@ -202,33 +210,6 @@ public class WordDAO {
 		}
 	}
 	
-	public static void getData(String word) {//시험 볼 때 쓸 데이터
-		Connection con = getConnection();
-
-		String select = "SELECT * FROM Word WHERE W_WORD = '" +
-		word + "'";
-
-		try {
-			pstmt = con.prepareStatement(select);
-			result = pstmt.executeQuery();
-
-			while(result.next()){ // 컬럼 이름
-				String W_Word = result.getString("W_Word");
-				String W_Mean = result.getString("W_Mean");
-				int W_Level = result.getInt("W_Level");
-				String W_Writer = result.getString("W_Writer");
-				//단어의 정보 출력
-				System.out.println("단어의 정보\n단어 : " + W_Word
-						+ ", 뜻 : " + W_Mean + ", 난이도 : " + W_Level + ", 작성자 : " + W_Writer);
-			}
-			pstmt.close();
-			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	public static void showTable() {
 		Connection con = getConnection();
 
@@ -256,17 +237,17 @@ public class WordDAO {
 	}
 	
 	//입력한 문자를 삭제하고싶은데, 삭제오류 수정필요 
-		public static void DeleteWord() {
+		public static void deleteWord() {
 			Connection con = getConnection();
 			
 			Scanner scan1 = new Scanner(System.in);
 			Scanner scan2 = new Scanner(System.in);
-			System.out.println("삭제하고 싶은 단어가 있습니까 ?\n (네 / 아니오)");
+			System.out.print("삭제하고 싶은 단어가 있습니까 ?\n (네 / 아니오) ");
 			String l = scan1.nextLine();
 		
 			if(l.equals("네")) {
-				System.out.println("삭제할 단어를 입력하세요.");
 				showTable();
+				System.out.print("삭제할 단어를 입력하세요 > ");
 				String w = scan2.nextLine();
 				
 				
@@ -290,6 +271,7 @@ public class WordDAO {
 		}
 		
 		
+	
 		
 		
 }

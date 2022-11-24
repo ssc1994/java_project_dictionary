@@ -58,7 +58,9 @@ public class UserDAO { //현재 로그인 멤버 구현
 		try {
 			Scanner sc = new Scanner(System.in);
 			UserDAO dao = new UserDAO();
+			System.out.print("ID > ");
 			String memberID = sc.next();
+			System.out.print("PW > ");
 			String memberPassword = sc.next();
 			if(dao.login(memberID, memberPassword) == 1) {
 				currMember.setName(memberID);
