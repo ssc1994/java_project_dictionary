@@ -43,7 +43,8 @@ public class EnglishTest {
 				+ "    from(select * \r\n"
 				+ "        from word)a \r\n"
 				+ "        where w_level = ?\r\n"
-				+ "        order by rn asc)aa";
+				+ "        order by DBMS_RANDOM.RANDOM)aa"
+				+ "        where rn<=10";
 		String W_Word = "";
 		String W_Mean = "";
 		String W_Writer = "";
