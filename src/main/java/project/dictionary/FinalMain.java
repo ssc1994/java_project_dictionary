@@ -26,12 +26,13 @@ public class FinalMain {
 					String upw = UserMain.upw;
 					UserDAO udao = new UserDAO();
 					WordDAO wdao = new WordDAO();
+					EnglishTest et = new EnglishTest();
 					boolean run2 = true;
 					String result = udao.loginMember().getName();
 					if(result != null) {
 						ww:while(run2) {
 							System.out.println("============================== 단어장 ==============================");
-							System.out.print("1. 단어 등록/수정 | 2. 단어목록 조회 | 3. 단어 삭제 | 4. 단어 테스트 | 0. 로그 아웃 | > ");
+							System.out.print("1. 단어 등록/수정 | 2. 단어목록 조회 | 3. 단어 삭제 | 4. 단어 테스트 | 5. 오답노트 | 0. 로그 아웃 | > ");
 							String menu = sc.nextLine();
 							switch (menu) {
 							case "1":
@@ -44,9 +45,15 @@ public class FinalMain {
 								break;
 							case "3": 
 								System.out.println("===== 단어 삭제 =====");
-								wdao.DeleteWord();
+								wdao.deleteWord();
 								break;
 							case "4": 
+								System.out.println("===== 단어 시험 =====");
+								et.getData();
+								break;
+							case "5":
+								System.out.println("===== 오답 노트 =====");
+								et.wrongAnswer();
 								break;
 							case "0":
 								System.out.println("로그아웃 되었습니다");
