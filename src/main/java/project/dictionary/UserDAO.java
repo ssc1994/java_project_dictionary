@@ -53,17 +53,13 @@ public class UserDAO { //현재 로그인 멤버 구현
 		return -2; //DB 오류
 	}
 	
-	public MemberVO loginMember() {
+	public MemberVO loginMember(String memberID, String memberPassword) {
 		MemberVO currMember = new MemberVO();
 		try {
-			Scanner sc = new Scanner(System.in);
 			UserDAO dao = new UserDAO();
-			System.out.print("ID > ");
-			String memberID = sc.next();
-			System.out.print("PW > ");
-			String memberPassword = sc.next();
 			if(dao.login(memberID, memberPassword) == 1) {
 				currMember.setName(memberID);
+				System.out.println("성공");
 			} else {
 				System.out.println("실패");
 			}
@@ -72,5 +68,27 @@ public class UserDAO { //현재 로그인 멤버 구현
 		}
 		return currMember;
 	}
+	
+//	public MemberVO loginMember() {
+//		MemberVO currMember = new MemberVO();
+//		Scanner sc = new Scanner(System.in);
+//		
+//		try {
+//			UserDAO dao = new UserDAO();
+//			System.out.print(">");
+//			String memberID = sc.next();
+//			System.out.print(">");
+//			String memberPassword = sc.next();
+//			if(dao.login(memberID, memberPassword) == 1) {
+//				currMember.setName(memberID);
+//				System.out.println("로그인 성공");
+//			} else {
+//				System.out.println("실패");
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return currMember;
+//	}
 	
 }
