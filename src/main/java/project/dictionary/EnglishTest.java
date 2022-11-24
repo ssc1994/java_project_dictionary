@@ -49,6 +49,7 @@ public class EnglishTest {
 		int W_Level = 0;
 		int score = 0;
 		int test = 0;
+		int count = 0;
 		try {
 			pstmt = con.prepareStatement(select);
 			pstmt.setInt(1, num);
@@ -59,6 +60,8 @@ public class EnglishTest {
 				W_Mean = result.getString("W_Mean");
 				W_Level = result.getInt("W_Level");
 				//단어의 정보 출력
+				count++;
+				System.out.println(count + "번 문제");
 				System.out.print("단어의 정보\n뜻 : " + W_Mean + "   |   단어 :   ");
 				String ans = scan.next();
 				if(W_Word.equals(ans)) {
