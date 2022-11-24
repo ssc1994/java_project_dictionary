@@ -37,7 +37,7 @@ public class FinalMain {
 							switch (menu) {
 							case "1":
 								System.out.println("===== 단어 등록 =====");
-								wdao.insertWord();
+								wdao.insertWord(result);
 								break;
 							case "2": 
 								System.out.println("===== 단어목록 조회 =====");
