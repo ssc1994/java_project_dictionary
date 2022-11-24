@@ -24,7 +24,7 @@ public class MainClass {
 		
 		boolean flag = true;
 		while(flag) {
-			System.out.println("1. 입력   ||2. 삭제   ||3. 조회   ||4. 시험   ||5. 오답노트  || 0. 종료");
+			System.out.println("1. 입력  ||2. 삭제  ||3. 조회  ||4.검색  ||5. 시험  ||6. 오답노트  ||0. 종료");
 			
 			int a = scan.nextInt();
 			
@@ -43,12 +43,15 @@ public class MainClass {
 				
 				break;
 			case 4:
-				et.getData();
+				wordDAO.searchWord();
 				break;
 			case 5:
-				et.wrongAnswer();
+				et.getData();
 				break;
 
+			case 6:
+				et.wrongAnswer();
+				
 			case 0:
 				flag = false;
 			default:

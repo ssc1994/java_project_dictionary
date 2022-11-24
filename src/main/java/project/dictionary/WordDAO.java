@@ -182,17 +182,38 @@ public class WordDAO {
 
 	}
 
-
-
+	public static void searchWord() { //검색기능
+		Connection con = getConnection();
 		
-		
-	
-	
+		Scanner scan = new Scanner(System.in);
+		String select = "SELECT * FROM Word WHERE W_Word = ?";
+		try {
+			System.out.print("검색할 단어 > ");
+			String word = scan.next();
+			pstmt = con.prepareStatement(select);
+			pstmt.setString(1, word);
+			result = pstmt.executeQuery();
+			
+			while(result.next()) {
+				String W_Word = result.getString("W_Word");
+				String W_Mean = result.getString("W_Mean");
+				int W_Level = result.getInt("W_Level");
+				String W_Writer = result.getString("W_Writer");
+				
+				System.out.println("단어의 정보\n단어 : " + W_Word + ", 뜻 : " + W_Mean);
+				
+			}
+			pstmt.close();
+			con.close();	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static void showTable() {
 		Connection con = getConnection();
 
-		String select = "SELECT * FROM Word ";
+		String select = "SELECT * FROM Word WHERE W_LEVEL asc";
 
 		try {
 			pstmt = con.prepareStatement(select);
