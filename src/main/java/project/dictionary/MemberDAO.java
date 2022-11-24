@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 public class MemberDAO {
 	
-	private static String url = MemberMain.url;
-	private static String uid = MemberMain.uid;
-	private static String upw = MemberMain.upw;
+	private static String url = MainClass.url;
+	private static String uid = MainClass.uid;
+	private static String upw = MainClass.upw;
 	
 	static Connection conn = null;
 	static PreparedStatement pstmt = null;
@@ -56,9 +56,9 @@ public class MemberDAO {
 	public int InsertData(MemberVO vo) {
 		int result = 0;
 		
-		MemberMain.url = "jdbc:oracle:thin:@172.30.1.32:1521:xe";
-		MemberMain.uid = "com02";
-		MemberMain.upw = "com02";
+		MainClass.url = "jdbc:oracle:thin:@172.30.1.32:1521:xe";
+		MainClass.uid = "com02";
+		MainClass.upw = "com02";
 		
 		//m_id, pw, m_name, birth, phone
 		String sql = "insert into members values(?, ?, ?, ?, ?)";
