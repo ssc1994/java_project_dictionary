@@ -53,13 +53,14 @@ public class WordDAO {
 				int importance = rs.getInt("W_LEVEL");
 				String word = rs.getString("W_WORD"); //컬럼명
 				String mean = rs.getString("W_MEAN");
+				String writer = rs.getString("W_Writer");
 
 				//한번 회전할 때마다 하나씩 생성
 				//vo에 행 데이터 저장, vo를 리스트에 add를 이용해서 저장
-				WordVO vo = new WordVO(importance, word, mean);
+				WordVO vo = new WordVO(importance, word, mean, writer);
 				list.add(vo);
 
-				System.out.println("난이도 : " + importance + ", 단어 : " + word + ", 뜻 : " + mean);
+				System.out.println("난이도 : " + importance + ", 단어 : " + word + ", 뜻 : " + mean + ", 작성자 :" + writer);
 			}
 
 		} catch (Exception e) {
@@ -116,7 +117,7 @@ public class WordDAO {
 	}
 
 
-	public static void insertWord() {
+	public static void insertWord(String writer) {
 		Connection con = getConnection();
 		String insert;
 		String select;
@@ -131,7 +132,6 @@ public class WordDAO {
 			System.out.print("\n난이도 >");
 			int level1 = scan.nextInt();
 			System.out.print("\n작성자 >");
-			String writer1 = scan.nextLine();
 			
 			select = "SELECT * FROM WORD where W_Word = ?";
 			pstmt=con.prepareStatement(select);
@@ -144,7 +144,7 @@ public class WordDAO {
 				pstmt.setString(1, word1);
 				pstmt.setString(2, mean1);
 				pstmt.setInt(3, level1);
-				pstmt.setString(4, writer1);
+				pstmt.setString(4, writer);
 				pstmt.executeUpdate();
 				System.out.println("입력완료");
 				
@@ -182,38 +182,17 @@ public class WordDAO {
 
 	}
 
-	public static void searchWord() { //검색기능
-		Connection con = getConnection();
+
+
 		
-		Scanner scan = new Scanner(System.in);
-		String select = "SELECT * FROM Word WHERE W_Word = ?";
-		try {
-			System.out.print("검색할 단어 > ");
-			String word = scan.next();
-			pstmt = con.prepareStatement(select);
-			pstmt.setString(1, word);
-			result = pstmt.executeQuery();
-			
-			while(result.next()) {
-				String W_Word = result.getString("W_Word");
-				String W_Mean = result.getString("W_Mean");
-				int W_Level = result.getInt("W_Level");
-				String W_Writer = result.getString("W_Writer");
-				
-				System.out.println("단어의 정보\n단어 : " + W_Word + ", 뜻 : " + W_Mean);
-				
-			}
-			pstmt.close();
-			con.close();	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+		
+	
+	
 	
 	public static void showTable() {
 		Connection con = getConnection();
 
-		String select = "SELECT * FROM Word WHERE W_LEVEL asc";
+		String select = "SELECT * FROM Word ";
 
 		try {
 			pstmt = con.prepareStatement(select);
@@ -224,9 +203,10 @@ public class WordDAO {
 				String W_WORD = result.getString("W_Word");
 				String W_MEAN = result.getString("W_Mean");
 				int W_LEVEL = result.getInt("W_LEVEL");
+				String writer = result.getString("W_Writer");
 				
 				System.out.println("\n영어 단어 : " + W_WORD + "\n영어 뜻 : " +
-						W_MEAN + "\n난이도 : level." + W_LEVEL + "\n" );	
+						W_MEAN + "\n난이도 : level." + W_LEVEL + "\n작성자 : "+ writer + "\n" );	
 			}
 			pstmt.close();
 			con.close();

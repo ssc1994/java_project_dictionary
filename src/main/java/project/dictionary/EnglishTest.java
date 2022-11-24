@@ -46,6 +46,7 @@ public class EnglishTest {
 				+ "        order by rn asc)aa";
 		String W_Word = "";
 		String W_Mean = "";
+		String W_Writer = "";
 		int W_Level = 0;
 		int score = 0;
 		int test = 0;
@@ -59,6 +60,7 @@ public class EnglishTest {
 				W_Word = result.getString("W_Word");
 				W_Mean = result.getString("W_Mean");
 				W_Level = result.getInt("W_Level");
+				W_Writer = result.getString("W_Writer");
 				//단어의 정보 출력
 				count++;
 				System.out.println(count + "번 문제");
@@ -66,13 +68,13 @@ public class EnglishTest {
 				String ans = scan.next();
 				if(W_Word.equals(ans)) {
 					System.out.println("정답입니다.");
-					score += W_Level;
+					score ++;
 				}else {
 					System.out.println("오답입니다.  정답 : " + W_Word);
 					System.out.println();
 					
 //--------------------------------myword에 추가
-					WordVO vo = new WordVO(W_Level, W_Word, W_Mean);
+					WordVO vo = new WordVO(W_Level, W_Word, W_Mean, W_Writer);
 					myword.add(vo);
 					
 				}

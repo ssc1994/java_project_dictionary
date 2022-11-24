@@ -42,11 +42,11 @@ public class MainClass {
 							switch (menu) {
 							case "1":
 								System.out.println("===== 단어 등록 =====");
-								wdao.insertWord();
+								wdao.insertWord(result);
 								break;
 							case "2": 
 								System.out.println("===== 단어목록 조회 =====");
-								wdao.showTable();
+								wdao.selectEx();
 								break;
 							case "3": 
 								System.out.println("===== 단어 삭제 =====");
