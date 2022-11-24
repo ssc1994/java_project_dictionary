@@ -7,7 +7,7 @@ public class MainClass {
 	public static String uid = "com02";
 	public static String upw = "com02";		//아이디
 	public static String url = "jdbc:oracle:thin:@172.30.1.32:1521:xe";
-
+	public static String result;
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String uid = MainClass.uid;
@@ -33,7 +33,7 @@ public class MainClass {
 				break;
 			case "2": 
 				boolean run2 = true;
-				String result = udao.loginMember().getName();
+				result = udao.loginMember().getName();
 				if(result != null) {
 					ww:while(run2) {
 						System.out.println("============================== 단어장 ==============================");
