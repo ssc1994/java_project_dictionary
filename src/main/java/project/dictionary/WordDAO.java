@@ -118,35 +118,44 @@ public class WordDAO {
 	}
 
 
-	public static void insertWord(String word, String mean, int level, String writer) {
+	public static void insertWord() {
 		Connection con = getConnection();
 		String insert;
 		String select;
 		String update;
 		try {
 
+			Scanner scan = new Scanner(System.in);
+			System.out.print("단어 >");
+			String word1 = scan.nextLine();
+			System.out.print("\n뜻 >");
+			String mean1 = scan.nextLine();
+			System.out.print("\n난이도 >");
+			int level1 = scan.nextInt();
+			System.out.print("\n작성자 >");
+			String writer1 = scan.nextLine();
+			
 			select = "SELECT * FROM WORD where W_Word = ?";
-
 			pstmt=con.prepareStatement(select);
-			pstmt.setString(1, word);
+			pstmt.setString(1, word1);
 			result = pstmt.executeQuery();
 			
 			if (result.next() == false) {
 				insert = "Insert Into Word Values(?, ?, ?,? )";
 				pstmt = con.prepareStatement(insert);
-				pstmt.setString(1, word);
-				pstmt.setString(2, mean);
-				pstmt.setInt(3, level);
-				pstmt.setString(4, writer);
+				pstmt.setString(1, word1);
+				pstmt.setString(2, mean1);
+				pstmt.setInt(3, level1);
+				pstmt.setString(4, writer1);
 				pstmt.executeUpdate();
 				System.out.println("입력완료");
 				
 			} else {
 				update = "Update Word Set  W_mean = ?, W_Level = ? WHERE W_Word = ?";
 				pstmt = con.prepareStatement(update);
-				pstmt.setString(1, mean);
-				pstmt.setInt(2, level);
-				pstmt.setString(3, word);
+				pstmt.setString(1, mean1);
+				pstmt.setInt(2, level1);
+				pstmt.setString(3, word1);
 				pstmt.executeUpdate();
 				System.out.println("수정완료");
 				
@@ -268,6 +277,7 @@ public class WordDAO {
 		}
 		
 		
+	
 		
 		
 }
