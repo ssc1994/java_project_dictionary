@@ -11,9 +11,9 @@ import java.util.Scanner;
 
 public class UserDAO { //현재 로그인 멤버 구현
 	
-	private Connection conn1 = null;
-	private PreparedStatement pstmt1 = null;
-	private ResultSet rs = null;
+	private Connection con = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet result = null;
 	
 	String url = "jdbc:oracle:thin:@172.30.1.32:1521:xe"; //주소
 	String uid = "com02"; //계정
@@ -27,12 +27,12 @@ public class UserDAO { //현재 로그인 멤버 구현
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn1 = DriverManager.getConnection(url, uid, upw);
-			pstmt1 = conn1.prepareStatement(sql);
-			pstmt1.setString(1, memberID);
-			rs = pstmt1.executeQuery();
-			while(rs.next()) {
-				if(rs.getString(1).contentEquals(memberPassword)) {
+			con = DriverManager.getConnection(url, uid, upw);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberID);
+			result = pstmt.executeQuery();
+			while(result.next()) {
+				if(result.getString(1).contentEquals(memberPassword)) {
 					return 1; //비밀번호 일치, 로그인 성공
 				} else {
 					return 0; //비밀번호 불일치
@@ -43,9 +43,9 @@ public class UserDAO { //현재 로그인 멤버 구현
 			e.printStackTrace();
 		} finally {
 			try {
-				conn1.close();
-				pstmt1.close();
-				rs.close();
+				con.close();
+				pstmt.close();
+				result.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
